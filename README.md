@@ -1,5 +1,7 @@
 ## Solar PV Anomaly Detection
+# ReComputer J4012
 
+![Photo](jetsonmodule.jpg)
 
 
 # Freezing Backbone Layers in Hybrid Model

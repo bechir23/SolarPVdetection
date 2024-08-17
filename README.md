@@ -1,37 +1,51 @@
-## Freezing Backbone Layers in Hybrid Model
+## Solar PV Anomaly Detection
 
-To freeze the backbone layers of the Hybrid Model, which includes ResNet and Xception, follow these steps after initializing the models. This will prevent the weights of these backbone layers from being updated during training.
 
-Add the following lines of code after initializing ResNet and Xception:
 
-```python
-# Freeze ResNet layers
+# Freezing Backbone Layers in Hybrid Model
+
+To freeze the backbone layers of the Hybrid Model, which includes ResNet and Xception add the following lines of code after initializing ResNet and Xception:
+
+```shell
+
 for param in self.resnet.parameters():
     param.requires_grad = False
-```python
+
+
 # Freeze Xception layers
 for param in self.xception.parameters():
     param.requires_grad = False
-
-## DeepStream Application
+```
+# DeepStream Application
 
 To run a DeepStream application on a Jetson device with optimized performance and speed, follow these steps:
 
+Set Clocks to High Performance
 
-# Set Clocks to High Performance
-```python
+To maximize the performance and power of your Jetson device, set the clocks to high:
+```shell
+
 sudo nvpmodel -m 0  # Set to MAX performance and power mode
 sudo jetson_clocks  # Apply the high performance clock settings
+```
+Convert YOLOv10 to ONNX and TensorRT
 
-# Convert the .pt (trained YOLOv10 model) file to ONNX and then to TensorRT engine with DLA Support
-```python
+1. Convert YOLOv10 (trained model) to ONNX format:
+```shell
 
-python -m torch.onnx.export <your_model> <model_output_path>.onnx --input_shapes <input_shapes>
-trtexec --onnx=<model_output_path>.onnx --saveEngine=<model_output_path>.engine
+   python export.py --weights /path/to/yolov10_weights.pt --img-size 640 --batch-size 1 --device 0 --include onnx
+```
+2. Optimize the ONNX model with TensorRT and enable DLA (Deep Learning Accelerator) support:
+```shell
 
-# Run the DeepStream application with the specified configuration file
-```python
+   trtexec --onnx=/path/to/yolov10_weights.onnx --fp16 --dla-core=0 --saveEngine=/path/to/yolov10_weights.trt
+```
+3.Run DeepStream Application
 
-deepstream-app -c <path_to_your_config_file>.txt
+To run the DeepStream application with the optimized TensorRT model, use the following command:
+```shell
 
+deepstream-app -c /path/to/config_file.txt
+
+```
 

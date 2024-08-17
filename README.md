@@ -20,7 +20,6 @@ for param in self.xception.parameters():
 
 To run a DeepStream application on a Jetson device with optimized performance and speed, follow these steps:
 
-Set Clocks to High Performance
 
 To maximize the performance and power of your Jetson device, set the clocks to high:
 ```shell

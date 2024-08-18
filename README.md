@@ -34,19 +34,26 @@ Convert YOLOv10 to ONNX and TensorRT
 1. Convert YOLOv10 (trained model) to ONNX format:
 ```shell
 
-   python export.py --weights /path/to/yolov10_weights.pt --img-size 640 --batch-size 1 --device 0 --include onnx
+   python3 export_yoloV10.py --weights IRdetection.pt
 ```
 2. Optimize the ONNX model with TensorRT and enable DLA (Deep Learning Accelerator) support:
 ```shell
 
-   trtexec --onnx=/path/to/yolov10_weights.onnx --fp16 --dla-core=0 --saveEngine=/path/to/yolov10_weights.trt
+   trtexec --onnx=IRdetection.onnx --fp16 --useDLACore=0 --saveEngine=IRdetection.engine --allowGPUFallback
 ```
+To analyze and dump the detailed information about the layers in TensorRT engine use :
+```shell
+
+  trtexec --loadEngine=IRdetection.engine --dumpLayerInfo
+
+```
+
 3.Run DeepStream Application
 
 To run the DeepStream application with the optimized TensorRT model, use the following command:
 ```shell
 
-deepstream-app -c /path/to/config_file.txt
+deepstream-app -c deepstream_app_config.txt
 
 ```
 

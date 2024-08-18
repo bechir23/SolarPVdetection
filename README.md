@@ -53,7 +53,7 @@ To analyze and dump the detailed information about the layers in TensorRT engine
 To run the DeepStream application with the optimized TensorRT model, use the following command:
 ```shell
 
-deepstream-app -c deepstreal_app_config.txt
+deepstream-app -c deepstream_app_config.txt
 
 ```
 

@@ -43,7 +43,10 @@ Convert YOLOv10 to ONNX and TensorRT
 ```
 To analyze and dump the detailed information about the layers in TensorRT engine use :
 ```shell
-trtexec --loadEngine=IRdetection.engine --dumpLayerInfo
+
+  trtexec --loadEngine=IRdetection.engine --dumpLayerInfo
+
+```
 
 3.Run DeepStream Application
 

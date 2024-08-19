@@ -48,9 +48,19 @@ To analyze and dump the detailed information about the layers in TensorRT engine
 
 ```
 
-3.Run DeepStream Application
+Run DeepStream Application
 
 To run the DeepStream application with the optimized TensorRT model, use the following command:
+```shell
+
+deepstream-app -c deepstream_app_config.txt
+
+```
+Or Convert YOLOv10 to ONNX format and then use DeepStream to build your engine from the ONNX file for GPU usage(You can configure the engine parameters in the config_infer_primary_yoloV10.txt file):
+```shell
+
+   python3 export_yoloV10.py --weights IRdetection.pt
+```
 ```shell
 
 deepstream-app -c deepstream_app_config.txt

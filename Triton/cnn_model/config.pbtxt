@@ -1,0 +1,44 @@
+name: "cnn_model"
+platform: "onnxruntime_onnx"
+max_batch_size: 0  # Set max batch size
+
+input [
+  {
+    name: "input"
+    data_type: TYPE_FP32
+    dims: [1 , 3, 640, 640]  # Batch dimension is dynamic
+  }
+]
+
+output [
+  {
+    name: "boxes"
+    data_type: TYPE_FP32
+    dims: [1, 300, 4]  # Batch dimension is dynamic, adjust based on model output
+  },
+  {
+    name: "scores"
+    data_type: TYPE_FP32
+    dims: [1, 300]  # Batch dimension is dynamic, adjust based on model output
+  },
+  {
+    name: "classes"
+    data_type: TYPE_FP32
+    dims: [1, 300]  # Batch dimension is dynamic, adjust based on model output
+  }
+]
+
+
+optimization {
+  
+  execution_accelerators {
+    gpu_execution_accelerator: [
+      {
+        name: "tensorrt",
+        parameters { key: "precision_mode" value: "FP16" }
+        parameters { key: "max_workspace_size_bytes" value: "1073741824" }
+      }
+    ]
+  }
+}
+

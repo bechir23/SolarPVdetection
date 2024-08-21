@@ -65,7 +65,7 @@ deepstream-app -c deepstream_app_config.txt
 
 ```
 # TritonServer
-For deploying Triton Inference Server on NVIDIA Jetson devices equipped with integrated GPUs, follow these steps to avoid a non detect GPU devices error :
+For deploying Triton Inference Server on NVIDIA Jetson device (iGPU) follow these steps to avoid a non detect GPU devices error :
 
 1. Pull the Triton Inference Server Docker image:
 ```shell

@@ -48,7 +48,7 @@ To analyze and dump the detailed information about the layers in TensorRT engine
 
 ```
 
-Run DeepStream Application
+3. Run DeepStream Application
 
 To run the DeepStream application with the optimized TensorRT model, use the following command:
 ```shell
@@ -62,6 +62,24 @@ Or Convert YOLOv10 to ONNX format and then use DeepStream to build your engine f
 python3 export_yoloV10.py --weights IRdetection.pt
 
 deepstream-app -c deepstream_app_config.txt
+
+```
+# TritonServer
+1. Pull the Triton Inference Server Docker image:
+```shell
+   docker pull nvcr.io/nvidia/tritonserver:23.11-py3-igpu
+
+```
+3. Run the Triton Inference Server Docker container:
+```shell
+ docker run --runtime=nvidia -v /home/bechir/models:/models -it nvcr.io/nvidia/tritonserver:23.11-py3-igpu bash
+
+
+```
+4. Navigate to the Triton server directory and start the server:
+```shell
+ cd /opt/tritonserver
+ ./tritonserver --model-repository=/models
 
 ```
 

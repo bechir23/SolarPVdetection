@@ -9,8 +9,6 @@
 To freeze the backbone layers of the Hybrid Model, which includes ResNet and Xception add the following lines of code after initializing ResNet and Xception:
 ```shell
 # Freeze Resnet layers
-
-
 for param in self.resnet.parameters():
     param.requires_grad = False
 

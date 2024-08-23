@@ -1,4 +1,78 @@
 ## Solar PV Anomaly Detection
+
+# Flash Jetson Orin NX with JetPack 5.1.2
+
+
+Step 1:Install the required dependencies on your Ubuntu host PC:
+```shell
+
+ sudo apt install qemu-user-static sshpass abootimg nfs-kernel-server libxml2-utils binutils -y
+```
+
+Step 2: Apply USB Core Module Configuration
+```shell
+ sudo sh -c 'echo -1 > /sys/module/usbcore/parameters/autosuspend'
+```
+
+Step 3: Download and Extract NVIDIA Drivers
+
+Download the necessary NVIDIA drivers for L4T 35.4.1 on the host PC.
+
+Extract the Jetson Linux package and the Root Filesystem package:
+```shell
+ tar -xjf Jetson_Linux_R35.4.1_aarch64.tbz2
+ sudo tar -xjf Tegra_Linux_Sample-Root-Filesystem_R35.4.1_aarch64.tbz2 -C Linux_for_Tegra/rootfs/
+```
+
+Navigate to the Linux_for_Tegra directory:
+```shell
+
+ cd Linux_for_Tegra/
+```
+
+Apply binaries and install flash prerequisites:
+```shell
+
+ sudo ./apply_binaries.sh
+ sudo ./tools/l4t_flash_prerequisites.sh
+```
+
+Navigate to the bootloader directory and apply NVIDIA patch for JP5.1.2:
+```shell
+
+ cd bootloader/t186ref/BCT
+```
+
+Edit the tegra234-mb2-bct-scr-p3767-0000.dts file and add the following lines under the tfc section:
+```shell
+
+ tfc {
+    reg@322 { /* GPIO_M_SCR_00_0 */
+    exclusion-info = <2>;
+    value = <0x38008080>;
+    };
+ };
+```
+
+Step 4: Pre-configure Username, Password, and Hostname
+```shell
+
+
+ cd Linux_for_Tegra
+ sudo tools/l4t_create_default_user.sh -u bechir -p bechir -a -n bechir-desktop --accept-license
+```
+
+Step 5: Flash the Jetson Device to the NVMe SSD
+```shell
+
+
+ sudo ./tools/kernel_flash/l4t_initrd_flash.sh --external-device nvme0n1p1 \
+  -c tools/kernel_flash/flash_l4t_external.xml -p "-c bootloader/t186ref/cfg/flash_t234_qspi.xml" \
+  --showlogs --network usb0 p3509-a02+p3767-0000 internal
+
+```
+
+
 # ReComputer J4012
 
 ![Photo](JetsonModule.png)

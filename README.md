@@ -9,7 +9,7 @@ Step 1:Install the required dependencies on your Ubuntu host PC:
  sudo apt install qemu-user-static sshpass abootimg nfs-kernel-server libxml2-utils binutils -y
 ```
 
-Step 2: Apply USB Core Module Configuration
+Step 2: Disable the USB autosuspend
 ```shell
  sudo sh -c 'echo -1 > /sys/module/usbcore/parameters/autosuspend'
 ```

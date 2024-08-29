@@ -141,14 +141,7 @@ To run the DeepStream application with the optimized TensorRT model, use the fol
 deepstream-app -c deepstream_app_config.txt
 
 ```
-Or Convert YOLOv10 to ONNX format and then use DeepStream to build your engine from the ONNX file for GPU usage(You can configure the engine parameters in the config_infer_primary_yoloV10.txt file):
-```shell
 
-python3 export_yoloV10.py --weights IRdetection.pt
-
-deepstream-app -c deepstream_app_config.txt
-
-```
 
 ## Inference on GPU
  1.Disable the model-engine line in config_infer_primary_yoloV10.txt to allow DeepStream to automatically create an engine using only the GPU (you can choose the network mode as you prefer):

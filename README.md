@@ -137,6 +137,10 @@ python3 export_yoloV10.py --weights IRdetection.pt
 deepstream-app -c deepstream_app_config.txt
 
 ```
+To configure deepstream to run inference on both DLAs and GPU in a parallel mode in a single process :
+ 1.add in proprety section in config_infer_primary_yolo.txt
+ 2.export max cuda connections 
+ 3.run deesptresam app 
 # TritonServer
 For deploying Triton Inference Server on NVIDIA Jetson device (iGPU) follow these steps to avoid a non detect GPU devices error :
 

@@ -101,6 +101,8 @@ To maximize the performance and power of your Jetson device, set the clocks to h
 
 sudo nvpmodel -m 0  # Set to MAX performance and power mode
 sudo jetson_clocks  # Apply the high performance clock settings
+
+
 ```
 Convert YOLOv10 to ONNX and TensorRT
 
@@ -109,10 +111,20 @@ Convert YOLOv10 to ONNX and TensorRT
 
    python3 export_yoloV10.py --weights IRdetection.pt
 ```
-2. Optimize the ONNX model with TensorRT and enable DLA (Deep Learning Accelerator) support:
+## Inference on DLA (Deep Learning Accelerator) and GPU
+To configure deepstream to run inference on both DLAs and GPU in a parallel mode in a single process :
+
+2. Optimize the ONNX model with TensorRT and enable DLA support:
 ```shell
 
    trtexec --onnx=IRdetection.onnx --fp16 --useDLACore=0 --saveEngine=IRdetection.engine --allowGPUFallback
+```
+Or add the following lines in config_infer_primary_yoloV10.txt to achieve the equivalent configuration:
+```shell
+ [proprety]
+ enable-dla=1
+ use-dla-core=0
+ 
 ```
 To analyze and dump the detailed information about the layers in TensorRT engine use :
 ```shell
@@ -137,10 +149,18 @@ python3 export_yoloV10.py --weights IRdetection.pt
 deepstream-app -c deepstream_app_config.txt
 
 ```
-To configure deepstream to run inference on both DLAs and GPU in a parallel mode in a single process :
- 1.add in proprety section in config_infer_primary_yolo.txt
- 2.export max cuda connections 
- 3.run deesptresam app 
+
+## Inference on GPU
+ 1.Disable the model-engine line in config_infer_primary_yoloV10.txt to allow DeepStream to automatically create an engine using only the GPU (you can choose the network mode as you prefer):
+ ```shell
+ #model-engine=IRdetection.engine
+```
+ 2.Run deepstream-app with specified configuration :
+```shell
+
+deepstream-app -c deepstream_app_config.txt
+
+```
 # TritonServer
 For deploying Triton Inference Server on NVIDIA Jetson device (iGPU) follow these steps to avoid a non detect GPU devices error :
 

@@ -56,8 +56,6 @@ Edit the tegra234-mb2-bct-scr-p3767-0000.dts file and add the following lines un
 
 Step 4: Pre-configure Username, Password, and Hostname
 ```shell
-
-
  cd Linux_for_Tegra
  sudo tools/l4t_create_default_user.sh -u bechir -p bechir -a -n bechir-desktop --accept-license
 ```

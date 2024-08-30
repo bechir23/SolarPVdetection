@@ -154,6 +154,34 @@ deepstream-app -c deepstream_app_config.txt
 deepstream-app -c deepstream_app_config.txt
 
 ```
+
+## INT8 Calibration
+1.Create a calibration Folder and Transfer Images
+
+```shell
+ mkdir calibration
+ for jpg in $(ls -1 PVsolar/train/images/*.jpg | sort -R | head -1000); do \
+     cp ${jpg} calibration/; \
+ done
+```
+2.Create file calibration.txt with images paths
+```shell
+  realpath calibration/*jpg > calibration.txt
+```
+3.Set Environment Variables 
+```shell
+ export INT8_CALIB_IMG_PATH=calibration.txt
+ export INT8_CALIB_BATCH_SIZE=8
+```
+4.Quantize with tensorRT 
+```shell
+ cd DeepStream-Yolo
+
+ trtexec --onnx=IRdetection.onnx --int8 --calib=calibration.txt --saveEngine=IRdetection_b8_gpu_int8.engine
+
+```
+
+
 # TritonServer
 For deploying Triton Inference Server on NVIDIA Jetson device (iGPU) follow these steps to avoid a non detect GPU devices error :
 

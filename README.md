@@ -156,7 +156,7 @@ deepstream-app -c deepstream_app_config.txt
 ```
 
 ## INT8 Calibration
-1.Create a calibration Folder and Transfer Images
+1.Create a calibration Folder and Transfer Images from the training subset
 
 ```shell
  mkdir calibration

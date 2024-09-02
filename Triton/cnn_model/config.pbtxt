@@ -1,6 +1,7 @@
 name: "cnn_model"
 platform: "onnxruntime_onnx"
-max_batch_size: 0  input [
+max_batch_size: 0  
+input [
   {
     name: "input"
     data_type: TYPE_FP32
